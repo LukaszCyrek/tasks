@@ -1,6 +1,11 @@
 package com.crud.tasks.trello.client;
 
+import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCardDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Component
 public class TrelloClient {
 
@@ -34,7 +41,9 @@ public class TrelloClient {
     public List<TrelloBoardDto> getTrelloBoards() {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/"+ trelloUserName +"/boards")
                 .queryParam("key", trelloAppKey)
-                .queryParam("token", trelloToken).build().encode().toUri();
+                .queryParam("token", trelloToken)
+                .queryParam("fields", "name,id")
+                .queryParam("lists", "all").build().encode().toUri();
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
@@ -43,6 +52,6 @@ public class TrelloClient {
         }
         return  new ArrayList<>();
         }
-    }
+}
 
 
