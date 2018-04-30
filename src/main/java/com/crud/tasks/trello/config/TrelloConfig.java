@@ -1,6 +1,7 @@
 package com.crud.tasks.trello.config;
 
 import lombok.Getter;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

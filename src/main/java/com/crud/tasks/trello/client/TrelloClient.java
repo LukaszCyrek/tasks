@@ -30,8 +30,8 @@ private static final org.slf4j.Logger LOGGER = (org.slf4j.Logger) LoggerFactory.
  @Autowired
  private TrelloConfig trelloConfig;
 
-    @Autowired
-    private RestTemplate restTemplate;
+ @Autowired
+ private RestTemplate restTemplate;
 
     public List<TrelloBoardDto> getTrelloBoards() {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/lukaszcyrek/boards")
