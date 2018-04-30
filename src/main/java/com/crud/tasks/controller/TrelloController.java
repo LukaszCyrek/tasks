@@ -20,7 +20,7 @@ public class TrelloController {
     @Autowired
     private TrelloClient trelloClient;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getTrelloBoards")
+    @RequestMapping(method = RequestMethod.GET, value = "/git add *")
     public void getTrelloBoards() {
 
         // GET request
@@ -38,8 +38,8 @@ public class TrelloController {
         });
 
         }
-//    @RequestMapping(method = RequestMethod.POST, value = "createTrelloCard")
-//    public CreatedTrelloCard createdTrelloCard (@RequestBody TrelloCardDto trelloCardDto){
-//        return trelloClient.create.
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/createTrelloCard")
+    public CreatedTrelloCard createdTrelloCard (@RequestBody TrelloCardDto trelloCardDto){
+        return trelloClient.createNewCard(trelloCardDto);
+    }
 }
