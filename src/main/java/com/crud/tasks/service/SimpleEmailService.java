@@ -1,4 +1,4 @@
-package com.crud.tasks.trello.config;
+package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
 import org.slf4j.Logger;

@@ -1,6 +1,7 @@
 package com.crud.tasks.trello.config;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.service.SimpleEmailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
