@@ -24,7 +24,7 @@ public class SimpleEmailService {
             javaMailSender.send(createMailMessage(mail));
             LOGGER.info("Email has been sent.");
         } catch (MailException e) {
-            LOGGER.info("Failed to process email sending: ", e.getMessage(), e );
+            LOGGER.info("Failed to process email sending: ", e.getMessage(), e);
         }
 
     }
@@ -34,14 +34,13 @@ public class SimpleEmailService {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        mailMessage.setCc(mail.getToCc());
 
-        if (mail.getToCc() == null) {
-            return mailMessage;
-        } else {
-            return mailMessage;
+
+        if (mail.getToCc() != null) {
+            mailMessage.setCc(mail.getToCc());
         }
-        }
+       return mailMessage;
+    }
 }
 
 

@@ -24,13 +24,16 @@ public class EmailScheduler {
 
 
     @Scheduled(fixedDelay = 10000)
-    public void sendInformationEmail(){
-        git init
+    public void sendInformationEmail() {
         long size = taskRepository.count();
-simpleEmailService.send(new Mail(
-        adminConfig.getAdminMail(),
-        SUBJECT,
-        "Curerently in database you got: " + size + " tasks",
-        "test@gmail.com"));
+        String task = "task";
+        if (size > 1) {
+            task = "tasks";
+        }
+        simpleEmailService.send(new Mail(
+                adminConfig.getAdminMail(),
+                SUBJECT,
+                "Curerently in database you got: " + size + " " + task,
+                "test@gmail.com"));
     }
 }
