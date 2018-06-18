@@ -43,16 +43,19 @@ public class TaskControllerTest {
     private MockMvc mockMvc;
 
 
+
     @Test
     public void testGetTasks() throws Exception {
         //given
         List<Task> listTasks = Arrays.asList(new Task(1L, "First Task", "Test"), new Task(2L, "Second Task", "Test2"));
         when(service.getAllTasks()).thenReturn(listTasks);
 
+        List<TaskDTo> taskDto = Arrays.asList(new TaskDTo(1L, "First Task", "Test"), new TaskDTo(2L, "Second Task", "Test2"));
         //When
+        when(taskMapper.mapToTaskDtoList(listTasks)).thenReturn(taskDto);
         ResultActions zz = mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0))
+                .andExpect(jsonPath("$", hasSize(2))
                 );
 
     }
