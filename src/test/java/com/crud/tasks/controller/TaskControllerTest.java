@@ -2,11 +2,12 @@ package com.crud.tasks.controller;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDTo;
+
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
+
 import com.google.gson.Gson;
-import javafx.beans.binding.When;
-import org.hamcrest.Matchers;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -18,21 +19,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import javax.xml.ws.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -81,7 +80,38 @@ public class TaskControllerTest {
                 .content(jsonContent)
                 .characterEncoding("UTF-8"));
     }
-/*    @Test
+
+  /* @Test
+    public void testGetTask() throws Exception {
+        //given
+        TaskDTo taskDto = new TaskDTo(1L, "test", "test_content");
+        Task task = new Task(1L, "test", "test_content");
+
+        when(service.getTaskById(task.getId())).thenReturn(task);
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
+        mockMvc.perform(get("/v1/tasks/getTask", 1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(404))
+                .andExpect(jsonPath("$.id",is(1L)))
+                .andExpect(jsonPath("$.title", is("test")))
+                .andExpect(jsonPath("$.content", is("test_content")));
+
+
+    }*/
+
+    @Test
+    public void testDeleteTask() throws Exception {
+        //given
+        Task task = new Task(1L,"test", "test_content");
+        TaskDTo taskDto = new TaskDTo(1L, "test", "test_content");
+        when(service.getTaskById(task.getId())).thenReturn(task);
+        //when & then
+        mockMvc.perform(delete("/v1/tasks/deleteTask", 1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(404));
+    }
+
+ /*   @Test
     public void testPutTask() throws Exception {
         //given
         Task task = new Task(1L,"test", "something to do");
@@ -94,7 +124,7 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(task);
         // when & then
         mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
-               .contentType(jsonContent)
+                .content(jsonContent)
                 .characterEncoding("UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
