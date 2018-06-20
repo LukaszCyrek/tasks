@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -32,7 +33,8 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.GET, value = "getTask")
     public TaskDTo getTask(@RequestParam Long taskId) throws TaskNotFoundException {
         //return new TaskDTo((long) 1, "test title", "test_content");
-        return taskMapper.mapToTaskDto(service.getTask(taskId).orElseThrow(TaskNotFoundException::new));
+        Optional<Task> task = service.getTask(taskId);
+        return taskMapper.mapToTaskDto(task.orElseThrow(TaskNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")

@@ -81,23 +81,23 @@ public class TaskControllerTest {
                 .characterEncoding("UTF-8"));
     }
 
-  /* @Test
+   @Test
     public void testGetTask() throws Exception {
         //given
         TaskDTo taskDto = new TaskDTo(1L, "test", "test_content");
         Task task = new Task(1L, "test", "test_content");
 
-        when(service.getTaskById(task.getId())).thenReturn(task);
+        when(service.getTask(task.getId())).thenReturn(Optional.ofNullable(task));
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
-        mockMvc.perform(get("/v1/tasks/getTask", 1L)
+        mockMvc.perform(get("/v1/task/getTask?taskId=1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(404))
-                .andExpect(jsonPath("$.id",is(1L)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id",is(1)))
                 .andExpect(jsonPath("$.title", is("test")))
                 .andExpect(jsonPath("$.content", is("test_content")));
 
 
-    }*/
+    }
 
     @Test
     public void testDeleteTask() throws Exception {
@@ -106,12 +106,12 @@ public class TaskControllerTest {
         TaskDTo taskDto = new TaskDTo(1L, "test", "test_content");
         when(service.getTaskById(task.getId())).thenReturn(task);
         //when & then
-        mockMvc.perform(delete("/v1/tasks/deleteTask", 1L)
+        mockMvc.perform(delete("/v1/task/deleteTask?taskId=1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(404));
+                .andExpect(status().isOk());
     }
 
- /*   @Test
+    @Test
     public void testPutTask() throws Exception {
         //given
         Task task = new Task(1L,"test", "something to do");
@@ -123,14 +123,14 @@ public class TaskControllerTest {
         Gson gson = new Gson();
         String jsonContent = gson.toJson(task);
         // when & then
-        mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonContent)
                 .characterEncoding("UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("test")))
                 .andExpect(jsonPath("$.content", is("something to do")));
-    }*/
+    }
 
 
 }
